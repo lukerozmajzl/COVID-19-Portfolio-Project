@@ -86,14 +86,14 @@ WITH PercentVaccinated (
 ) AS ( 
   SELECT
     cd.continent,
-	cd.location,
-	cd.date,
-	cd.population,
-	cv.new_vaccinations,
-	SUM(CAST(new_vaccinations AS INT)) OVER (
-	  PARTITION BY cd.location
-	  ORDER BY cd.date
-	) AS cumulative_vaccinations
+    cd.location,
+    cd.date,
+    cd.population,
+    cv.new_vaccinations,
+    SUM(CAST(new_vaccinations AS INT)) OVER (
+      PARTITION BY cd.location
+      ORDER BY cd.date
+    ) AS cumulative_vaccinations
   FROM PortfolioProject..CovidDeaths cd
   JOIN PortfolioProject..CovidVaccinations cv
     ON cd.location = cv.location
@@ -108,17 +108,17 @@ ORDER BY location, date;
 --Create view to store data for later visualizations
 CREATE VIEW PercentVaccinated AS
 SELECT
-    cd.continent,
-	cd.location,
-	cd.date,
-	cd.population,
-	cv.new_vaccinations,
-	SUM(CAST(new_vaccinations AS INT)) OVER (
-	  PARTITION BY cd.location
-	  ORDER BY cd.date
-	) AS cumulative_vaccinations
-  FROM PortfolioProject..CovidDeaths cd
-  JOIN PortfolioProject..CovidVaccinations cv
-    ON cd.location = cv.location
-    AND cd.date = cv.date
-  WHERE cd.continent IS NOT NULL
+  cd.continent,
+  cd.location,
+  cd.date,
+  cd.population,
+  cv.new_vaccinations,
+  SUM(CAST(new_vaccinations AS INT)) OVER (
+    PARTITION BY cd.location
+    ORDER BY cd.date
+  ) AS cumulative_vaccinations
+FROM PortfolioProject..CovidDeaths cd
+JOIN PortfolioProject..CovidVaccinations cv
+  ON cd.location = cv.location
+  AND cd.date = cv.date
+WHERE cd.continent IS NOT NULL
