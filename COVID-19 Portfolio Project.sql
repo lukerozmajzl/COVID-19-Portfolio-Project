@@ -114,7 +114,7 @@ SELECT
 FROM PortfolioProject..CovidDeaths cd
 JOIN PortfolioProject..CovidVaccinations cv
   ON cd.location = cv.location
-	AND cd.date = cv.date
+  AND cd.date = cv.date
 WHERE cd.continent IS NOT NULL
 
 --Death Percentage by Latitude
